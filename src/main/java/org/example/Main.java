@@ -1,3 +1,9 @@
+package org.example;
+
+import org.example.Calculation;
+import org.example.Converters;
+import org.example.Employee;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
