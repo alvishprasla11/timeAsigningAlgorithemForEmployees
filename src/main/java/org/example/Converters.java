@@ -7,25 +7,34 @@ public class Converters {
         for(int i=0;i<time.length;i++){
             if (time[i]==1){
                 start=i+1;
+                break;
+            }
+        }
+        for(int i=time.length-1;i>=0;i--){
+            if (time[i]==1){
+                end=i+1;
+                break;
             }
         }
         if (start==0){
             return "OFF";
         }
-        return timeConvert(start)+"-"+timeConvert(end);
+        else {
+            return timeConvert(start) + "-" + timeConvert(end);
+        }
     }
     public static String timeConvert(int i){
         if (i==1){return "1 AM";}
-        else if (i==2){return "2 AM";}
-        else if (i==3){return "3 AM";}
-        else if (i==4){return "4 AM";}
-        else if (i==5){return "5 AM";}
-        else if (i==6){return "6 AM";}
-        else if (i==7){return "7 AM";}
-        else if (i==8){return "8 AM";}
-        else if (i==9){return "9 AM";}
-        else if (i==10){return "10 AM";}
-        else if (i==11){return "11 AM";}
+        else if (i==2){return "2AM";}
+        else if (i==3){return "3AM";}
+        else if (i==4){return "4AM";}
+        else if (i==5){return "5AM";}
+        else if (i==6){return "6AM";}
+        else if (i==7){return "7AM";}
+        else if (i==8){return "8AM";}
+        else if (i==9){return "9AM";}
+        else if (i==10){return "10AM";}
+        else if (i==11){return "11AM";}
         else if (i==12){return "12PM";}
         else if (i==13){return "1PM";}
         else if (i==14){return "2PM";}
