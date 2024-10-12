@@ -19,5 +19,8 @@ class CalculationTest {
 
     @Test
     void hoursContinued() {
+       int [] Expected={1,1,4};
+       int []Result=Calculation.hoursContinued(5,4);
+       assertArrayEquals(Expected,Result);
     }
 }

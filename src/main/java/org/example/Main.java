@@ -32,7 +32,8 @@ public class Main {
         int[][] numberOfEmployeesInAnHour=new int[7][24];
         String[][] perHourString = new String[perHourEmployeeNumber][7];
         for (int i = 0; i < perHourEmployeeNumber; i++) {//some error over here
-            for (int j = 0; j < perHourString.length; j++) {
+            System.out.println("\n\n");
+            for (int j = 0; j < perHourString[i].length; j++) {
                 System.out.println("Please enter the hours when number of employees in an hour are " + (i + 1) + " for "+days[j]+" \n\nin 24 hours format(separating the start and end time by a - )\nif it is same as the last day then enter 'last'");
                 String perDayEmployee = sc.nextLine();
                 perHourString[i]=noLast(perDayEmployee,perHourString[i],j,sc);
@@ -43,6 +44,7 @@ public class Main {
         Business Final = new Business(businessHours, businessName,numberOfEmployeesInAnHour);
         System.out.println("Please enter the number of employees employed: ");
         int employed = sc.nextInt();
+        sc.nextLine();
         Employee[] employees = new Employee[employed];
         for (int i = 0; i < employed; i++) {
             int employeeNumber = i + 1;
@@ -76,8 +78,9 @@ public class Main {
                 System.out.println("There is no last to choose from, enter the values for the first day:");
                 perDayEmployee = sc.nextLine();
                 perHourString[j] = perDayEmployee;
+
             }
-        } else {
+        } else if {
             perHourString[j] = perDayEmployee;
         }
         // Ensure the input is not empty

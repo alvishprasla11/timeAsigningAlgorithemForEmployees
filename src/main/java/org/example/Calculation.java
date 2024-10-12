@@ -2,6 +2,13 @@ package org.example;
 
 public class Calculation {
     public static String[][] alotTime(Employee [] employees,Business business) {
+
+        // this makes it so that each employee gets job continus untill it raaches 8 hours which is wrong way to put this as this would also make it so that employye
+        //gets employeed twice in a day and next day gets employeeed when he gets free time this wont work
+
+        // needs fixing
+
+
         int [] extra_hours=hours(employees,business);
         int maxWorkingHours=0;
         if (extra_hours[0]!=0&&extra_hours[1]!=0&&extra_hours[2]!=0) {
@@ -101,7 +108,7 @@ public class Calculation {
                 itarator = length;
             }
         }
-        else{
+        else {
             extra=temp;
             temp=0;// to distinct that extra time is less then employees
             itarator=1;//to allow the use of while loop
