@@ -16,30 +16,53 @@ public class Calculation {
         }
         String[][] alotedTime= new String[employees.length][8];
         for (int i = 0; i < employees.length; i++) {
-            alotedTime[i][0]=employees[i].getEmployeeName();
-
-            int maxHoursForEmployees = employees[i].getAssignedTime();
+                alotedTime[i][0]=employees[i].getEmployeeName();
             int[][] businessHours = business.getHoursOfOperation();
             int[][] numberOfEmployeesInAnHour = business.getNumberOfEmployeesInAnHour();
-            for (int j = 1; j < 8; j++) {
-                int []time= new int[24];
-                for(int k=0;k<24;k++) { //not correct from here
-                    if(maxHoursForEmployees!=0) {
-                        if (businessHours[j][k] == 1 && numberOfEmployeesInAnHour[j][k] != 0) {
-                            time[k]=1;
-                            employees[i].setAssignedTime(employees[i].getAssignedTime()-1);
-                            maxWorkingHours++;
-                            numberOfEmployeesInAnHour[j][k]--;
-                        }
-                        if(maxWorkingHours==8){
+            int[][]  employeeAvailableTimeMorning= employees[i].getAvailableTimeMorning();
+            int[][]  employeeAvailableTimeEvening= employees[i].getAvailableTimeEvening();
+
+            for (int j = 1; j < 7; j++) {
+                if(employees[i].getAssignedTime()!=0) {
+                    int[] time = new int[24];
+                    int tempM =0;
+                    int tempE =0;
+                    for (int k = 0; k < time.length; k++) {
+                        if (employees[i].getAssignedTime() != 0){
+                            // for morning
+                            if (numberOfEmployeesInAnHour[j][k] >= 1 && employeeAvailableTimeMorning[j][k] == 1) {//not crrect
+                                time[k] = 1;
+                                employees[i].setAssignedTime(employees[i].getAssignedTime() - 1);
+                                maxWorkingHours++;
+                                numberOfEmployeesInAnHour[j][k]--;
+                                tempM++;
+
+                            } else if ((numberOfEmployeesInAnHour[j][k] == 0 && employeeAvailableTimeMorning[j][k] == 1 && tempM >0) || (employeeAvailableTimeMorning[j][k] == 0 && tempM >0) || (businessHours[j][k] == 0)) {
+                                break;
+                            } else if(employeeAvailableTimeMorning[j][k] == 0 && tempM == 0) {
+                                if (numberOfEmployeesInAnHour[j][k] >= 1 && employeeAvailableTimeEvening[j][k] == 1) {//not crrect
+                                    time[k] = 1;
+                                    employees[i].setAssignedTime(employees[i].getAssignedTime() - 1);
+                                    maxWorkingHours++;
+                                    numberOfEmployeesInAnHour[j][k]--;
+                                    tempE++;
+
+                                } else if ((numberOfEmployeesInAnHour[j][k] == 0 && employeeAvailableTimeEvening[j][k] == 1 && tempE >0) || (employeeAvailableTimeMorning[j][k] == 0 && tempE >0) || (businessHours[j][k] == 0)) {
+                                    break;
+                                }
+                            }
+                            if (maxWorkingHours == 8) {
+                                break;
+                            }
+                        } else {
                             break;
                         }
                     }
-                    else{
-                        break;
-                    }
+                    alotedTime[i][j] = Converters.Converter(time);
                 }
-                alotedTime[i][j] = Converters.Converter(time);
+                else {
+                    break;
+                }
             }
         }
         return alotedTime;

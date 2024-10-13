@@ -1,5 +1,7 @@
 package org.example;
 
+import java.awt.font.FontRenderContext;
+
 public class Converters {
     public static String Converter(int []time){
         int start=0;
@@ -54,11 +56,30 @@ public class Converters {
         for (int i = 0; i < businessHours.length; i++) {
             int index = businessHours[i].indexOf("-");
             int start = Integer.parseInt(businessHours[i].substring(0, index))-1;
-            int end = Integer.parseInt(businessHours[i].substring(index + 1, businessHours[i].length()))-1;
+            int end = Integer.parseInt(businessHours[i].substring(index + 1, businessHours[i].length()));
+            for (int j = 0; j < start; j++) {
+                hoursOfOperation[i][j] = -1;//so that we know when does it really start
+            }
             for (int j = start; j < end; j++) {
                 hoursOfOperation[i][j] = value;
             }
+            for (int j = end+1; j > 25; j++) {
+                hoursOfOperation[i][j] = 0;
+            }
         }
         return hoursOfOperation;
+    }
+    public static int[][] mergeArrays(int[][][] Array) {
+        int[][]result = new int[7][24];
+        for (int i = 0; i < Array.length; i++) {
+            for (int j = 0; j < Array[i].length; j++) {
+                for (int k = 0; k < Array[i][j].length; k++) {
+                    if (Array[i][j][k] != -1 && Array[i][j][k] != 0){
+                        result[j][k] = Array[i][j][k];
+                    }
+                }
+            }
+        }
+        return result;
     }
 }

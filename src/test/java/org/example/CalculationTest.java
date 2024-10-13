@@ -7,6 +7,7 @@ class CalculationTest {
 
     @Test
     void alotTime() {
+
     }
 
     @Test

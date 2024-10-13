@@ -11,6 +11,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main {
+    //few assumptions are made in the code
+    //1. the business operates at a continues time i.e. once it starts it stops only when it ends with no break in between
+    //2. the employees can only give the only two best timeslot of morning and evening with just one break of (preferably at least and) at most 8 hours
+
+    //3. the employee names should be given in descending order for priority
+
     final static public String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     public static void main(String[] args) {
@@ -20,7 +26,7 @@ public class Main {
         String businessName = sc.nextLine();
         String[] businessHoursString = new String[7];
         for (int i = 0; i < businessHoursString.length; i++) {
-            System.out.println("Please enter the business working hours for " + days[i] + "\n\nin 24 hours format(separating the start and end time by a - )\nif it is same as the last day then enter 'last'");
+            System.out.println("Please enter the business working hours for " + days[i] + "\n\nin 24 hours format(separating the start and end time by a - )\nif it is same as the last day then enter 'L'");
             String businessHoursDay = sc.nextLine();
             businessHoursString = noLast(businessHoursDay, businessHoursString, i,sc);
         }
@@ -29,18 +35,24 @@ public class Main {
         System.out.println("Please enter the maximum number of employees in an hour: ");
         int perHourEmployeeNumber = sc.nextInt();
         sc.nextLine();// to Consume the newline left-over
-        int[][] numberOfEmployeesInAnHour=new int[7][24];
+        int[][][] numberOfEmployeesPerHourAllValues=new int[perHourEmployeeNumber][7][24];
+        int [][] numberOfEmployeesPerHourPerNumber= new int[7][24];
+        int [][] numberOfEmployeesInAnHour= new int[7][24];
         String[][] perHourString = new String[perHourEmployeeNumber][7];
         for (int i = 0; i < perHourEmployeeNumber; i++) {//some error over here
             System.out.println("\n\n");
             for (int j = 0; j < perHourString[i].length; j++) {
-                System.out.println("Please enter the hours when number of employees in an hour are " + (i + 1) + " for "+days[j]+" \n\nin 24 hours format(separating the start and end time by a - )\nif it is same as the last day then enter 'last'");
+                System.out.println("Please enter the hours when number of employees in an hour are " + (i + 1) + " for "+days[j]+" \n\nin 24 hours format(separating the start and end time by a - )\nif it is same as the last day then enter 'L'");
                 String perDayEmployee = sc.nextLine();
                 perHourString[i]=noLast(perDayEmployee,perHourString[i],j,sc);
 
             }
-            numberOfEmployeesInAnHour = Converters.hoursConverter(perHourString[i],i+1);
+            numberOfEmployeesPerHourPerNumber= Converters.hoursConverter(perHourString[i],i+1);
+            numberOfEmployeesPerHourAllValues[i] = numberOfEmployeesPerHourPerNumber;
+
         }
+        numberOfEmployeesInAnHour=Converters.mergeArrays(numberOfEmployeesPerHourAllValues);
+        System.out.println(Arrays.deepToString(numberOfEmployeesInAnHour));
         Business Final = new Business(businessHours, businessName,numberOfEmployeesInAnHour);
         System.out.println("Please enter the number of employees employed: ");
         int employed = sc.nextInt();
@@ -56,22 +68,28 @@ public class Main {
             String overtime = sc.nextLine();
             System.out.println("Please enter the maximum hours you want that employee to work for a week: ");
             int employeeAsignedTime = sc.nextInt();
-            String[] availableHoursString = new String[7];
+            String[] availableHoursMorningString = new String[7];
+            String[] availableHoursEveningString = new String[7];
             for (int j = 0; j < 7; j++) {
-                System.out.println("Please enter the available hours for the employee for" + days[j] + " /n/n in 24 hours format(seprateing the start and end time by a - ):");
-                String availableHoursDay = sc.nextLine();
-                availableHoursString[j] = availableHoursDay;
+                System.out.println("Please enter the available hours for the employee for" + days[j] + "\n first enter morning available time then enter evening time \n\n in 24 hours format(seprateing the start and end time by a - )\nif it is same as the last day then enter 'L':");
+                String availableHoursDayMorning = sc.nextLine();
+                String availableHoursDayEvening = sc.nextLine();
+
+                availableHoursMorningString = noLast(availableHoursDayMorning, availableHoursMorningString, j,sc);
+                availableHoursEveningString = noLast(availableHoursDayEvening, availableHoursEveningString, j,sc);
             }
-            int[][] availableHours = Converters.hoursConverter(availableHoursString,1);
-            Employee employee = new Employee(employeeNumber, employeeName, employeeContract, availableHours,employeeAsignedTime,overtime);
+            int[][] availableHoursMorning = Converters.hoursConverter(availableHoursMorningString,1);
+            int[][] availableHoursEvening = Converters.hoursConverter(availableHoursEveningString,1);
+            Employee employee = new Employee(employeeNumber, employeeName, employeeContract, availableHoursMorning,availableHoursEvening,employeeAsignedTime,overtime);
             employees[i] = employee;
         }
         String [][] CSV= Calculation.alotTime(employees,Final);
-        CSV_Creator(CSV);
+        System.out.println(Arrays.deepToString(CSV));
+        //CSV_Creator(CSV);
     }
     public static String[] noLast(String perDayEmployee, String[] perHourString, int j, Scanner sc) {
 
-        if (perDayEmployee.equalsIgnoreCase("last")) {
+        if (perDayEmployee.equalsIgnoreCase("L")) {
             if (j > 0) {
                 perHourString[j] = perHourString[j - 1];  // Copy the previous day's value
             } else {
@@ -80,7 +98,7 @@ public class Main {
                 perHourString[j] = perDayEmployee;
 
             }
-        } else if {
+        } else {
             perHourString[j] = perDayEmployee;
         }
         // Ensure the input is not empty
