@@ -20,21 +20,32 @@ public class Main {
     final static public String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     public static void main(String[] args) {
+        //start
         System.out.println("Hello! welcome to employee time management software!/n");
+
+        //business name
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter the business name: ");
         String businessName = sc.nextLine();
+
+        //the working hours for the business
         String[] businessHoursString = new String[7];
         for (int i = 0; i < businessHoursString.length; i++) {
             System.out.println("Please enter the business working hours for " + days[i] + "\n\nin 24 hours format(separating the start and end time by a - )\nif it is same as the last day then enter 'L'");
             String businessHoursDay = sc.nextLine();
             businessHoursString = noLast(businessHoursDay, businessHoursString, i,sc);
         }
+
+        //converts business hours string to 1s and 0s array for 7 days
         int[][] businessHours = Converters.hoursConverter(businessHoursString,1);
         System.out.println(Arrays.deepToString(businessHours));
+
+        //maximum possible employees in one hour
         System.out.println("Please enter the maximum number of employees in an hour: ");
-        int perHourEmployeeNumber = sc.nextInt();
+        int perHourEmployeeNumber = sc.nextInt();//maximum possible employees in one hour
         sc.nextLine();// to Consume the newline left-over
+
+        //employees per working hour
         int[][][] numberOfEmployeesPerHourAllValues=new int[perHourEmployeeNumber][7][24];
         int [][] numberOfEmployeesPerHourPerNumber= new int[7][24];
         int [][] numberOfEmployeesInAnHour= new int[7][24];

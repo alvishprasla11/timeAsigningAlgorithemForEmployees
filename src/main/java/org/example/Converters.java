@@ -3,7 +3,7 @@ package org.example;
 import java.awt.font.FontRenderContext;
 
 public class Converters {
-    public static String Converter(int []time){
+    public static String Converter(int []time){//for converting array of time consiating 0s and ones  to reaable english value of time
         int start=0;
         int end=0;
         for(int i=0;i<time.length;i++){
@@ -25,7 +25,7 @@ public class Converters {
             return timeConvert(start) + "-" + timeConvert(end);
         }
     }
-    public static String timeConvert(int i){
+    public static String timeConvert(int i){//converting the int value of time into string to be readable by the user
         if (i==1){return "1 AM";}
         else if (i==2){return "2AM";}
         else if (i==3){return "3AM";}
@@ -51,7 +51,7 @@ public class Converters {
         else if (i==23){return "11PM";}
         else {return "12PM";}
     }
-    public static int[][] hoursConverter(String[] businessHours,int value) {
+    public static int[][] hoursConverter(String[] businessHours,int value) {//converts string value for example 6-7 into 1s and 0 to be stored in an array
         int[][] hoursOfOperation = new int[7][24];
         for (int i = 0; i < businessHours.length; i++) {
             int index = businessHours[i].indexOf("-");
@@ -69,7 +69,7 @@ public class Converters {
         }
         return hoursOfOperation;
     }
-    public static int[][] mergeArrays(int[][][] Array) {
+    public static int[][] mergeArrays(int[][][] Array) {//merges a 3d array to be a 2d array
         int[][]result = new int[7][24];
         for (int i = 0; i < Array.length; i++) {
             for (int j = 0; j < Array[i].length; j++) {
