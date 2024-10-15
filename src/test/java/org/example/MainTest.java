@@ -3,11 +3,18 @@ package org.example;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 class MainTest {
 
     @Test
-    void CSV_Creator() {
+    void main() {
+    }
 
+    @Test
+    void noLast() {
+       String[] expected={};
+    }
+
+    @Test
+    void CSV_Creator() {
     }
 }

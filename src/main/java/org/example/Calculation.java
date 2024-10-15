@@ -8,6 +8,10 @@ public class Calculation {
 
         // needs fixing
 
+        // what we can do is check at what time what employees are free and according to that
+        // we can alot them time add
+        int[][] totalTime=new int[7][24];
+
 
         int [] extra_hours=hours(employees,business);
         int maxWorkingHours=0;
@@ -28,7 +32,16 @@ public class Calculation {
                     int tempM =0;
                     int tempE =0;
                     for (int k = 0; k < time.length; k++) {
+                         if (businessHours[j][k]==1&& (employeeAvailableTimeEvening[j][k]==1||employeeAvailableTimeMorning[j][k]==1){
+
+                         }
+
+
+
+
+
                         if (employees[i].getAssignedTime() != 0){
+
                             // for morning
                             if (numberOfEmployeesInAnHour[j][k] >= 1 && employeeAvailableTimeMorning[j][k] == 1) {//not crrect
                                 time[k] = 1;
