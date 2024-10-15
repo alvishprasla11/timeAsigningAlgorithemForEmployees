@@ -12,7 +12,6 @@ class CalculationTest {
 
     @Test
     void overTime() {
-        Employee[] expected={new Employee(1,"a","part-tiem",)}
     }
 
     @Test

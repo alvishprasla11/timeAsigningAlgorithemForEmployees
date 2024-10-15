@@ -14,7 +14,7 @@ public class Employee {
         this.employeeNumber = employeeNumber;
         this.employeeName = employeeName;
         this.employeeContract = employeeContract;
-        this.availableTimeEvening = this.availableTimeEvening;//the available time is a 7x24 array which has 1 when the employee available
+        this.availableTimeEvening = availableTimeEvening;//the available time is a 7x24 array which has 1 when the employee available
         this.assignedTime = assignedTime;//the time that the user wants this employee to work in a week
         if (employeeContract.equalsIgnoreCase("part-time")) {
             this.hours = 20;//available time for part-time employees in canada is 20 hours;
