@@ -12,7 +12,7 @@ public class Business {
         for(int i=0;i<numberOfEmployeesInAnHour.length;i++){
             for(int j=0;j<numberOfEmployeesInAnHour[i].length;j++){
                 if (numberOfEmployeesInAnHour[i][j]!=0){
-                    this.totalSlots=+hoursOfOperation[i][j];
+                    this.totalSlots=+numberOfEmployeesInAnHour[i][j];
                 }
             }
         }
