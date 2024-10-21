@@ -6,6 +6,10 @@ import static org.example.Main.days;
 
 public class Calculation {
     public static String[][] alotTime(Employee[] employees, Business business) {
+
+        //todo this is currently returning the time for the employees to work with accordance with the business time so it is giveing the correct time
+        //todo just the employees in an hour criteria is not met rest the output is sorting with time
+        hireMorePeople(employees, business);
         String[][] alotedTime = new String[employees.length][8]; // 1st column is name, remaining 7 for days
 
         int[][] businessHours = business.getHoursOfOperation(); // Get the business hours for the week
@@ -27,7 +31,7 @@ public class Calculation {
                 // Assign morning hours if available and within limits
                 for (int hour = 0; hour < 24 && totalAssignedHours < assignedHours; hour++) {
                     if (availableMorning[day][hour] == 1 && businessHours[day][hour] == 1) {
-                        assignedTimeForDay.append(hour).append("-");
+                        assignedTimeForDay.append(hour+1).append("-");
                         totalAssignedHours++;
                     } else if (assignedTimeForDay.length() > 0) {
                         assignedTimeForDay.append(hour);

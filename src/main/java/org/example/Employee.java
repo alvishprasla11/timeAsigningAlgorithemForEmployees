@@ -24,7 +24,7 @@ public class Employee {
         } else if (employeeContract.equalsIgnoreCase("full-time")) {
             this.hours = 40;//available time for full-time employees in canada is 40 hours
         }
-        while(assignedTime>=hours) {
+        while(assignedTime>hours) {
            System.out.println("the assigneed time entered is bigger then the "+employeeContract+" legal limit of "+hours+" !!!\n enter the aloted time which is lesser then "+hours+" hours!!!");
            Scanner scanner = new Scanner(System.in);
            assignedTime = scanner.nextInt();
