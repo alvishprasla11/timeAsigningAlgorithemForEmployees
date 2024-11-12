@@ -73,9 +73,20 @@ public class Main {
 
         //starting with employee details
         // the number of employees employeed
+        int employeeTemp=0;
+        int employed=0;
+        while(employeeTemp==0){
         System.out.println("Please enter the number of employees employed: ");
-        int employed = sc.nextInt();
+        employed = sc.nextInt();
         sc.nextLine();
+        if (employed<perHourEmployeeNumber){
+            System.out.println("the number of employees entered are too less to meet the per hour number\n please enter the value greater then max employees in an hour: ");
+            employed = sc.nextInt();
+            sc.nextLine();
+            }
+        else{
+            employeeTemp++;}
+        }
         Employee[] employees = new Employee[employed];
 
         //getting employee data
