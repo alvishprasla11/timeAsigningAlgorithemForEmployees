@@ -3,7 +3,7 @@ package org.example;
 import java.awt.font.FontRenderContext;
 
 public class Converters {
-    public static String Converter(int []time){//for converting array of time consiating 0s and ones  to reaable english value of time
+    public static String Converter(int []time){//for converting array of time consiating 0s and 1s  to reaable english value of time
         int start=0;
         int end=0;
         for(int i=0;i<time.length;i++){
@@ -83,3 +83,4 @@ public class Converters {
         return result;
     }
 }
+//complete

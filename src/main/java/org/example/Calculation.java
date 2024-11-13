@@ -1,26 +1,23 @@
 package org.example;
 
-import java.util.Arrays;
-import java.util.HashMap;
-
-import static org.example.Main.days;
+import static org.example.Converters.Converter;
 
 public class Calculation {
+    final static public String[] days = {"","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
     public static String[][] alotTime(Employee[] employees, Business business) {
-
-        //todo this is currently returning the time for the employees to work with accordance with the business time so it is giveing the correct time
-        //todo just the employees in an hour criteria is not met rest the output is sorting with time
         hireMorePeople(employees, business);
-        String[][] finalAlotedTime = new String[employees.length][8]; // 1st column is name, remaining 7 for days
-        String[][][] alotedTime = new String[employees.length][8][25];
+        String[][] finalAlotedTime = new String[employees.length+1][8]; // 1st column is name, remaining 7 for days
+        int[][][] alotedTime = new int[employees.length][7][24];
 
         int[][] businessHours = business.getHoursOfOperation(); // Get the business hours for the week
         int[][] numberOfEmployeesInAnHour = business.getNumberOfEmployeesInAnHour();
-
+        int[][]freeTime=sortedFreeTime(employees, business);
         for (int i = 0; i < employees.length; i++) {
-            Employee employee = employees[i];
-            finalAlotedTime[i][0] = employee.getEmployeeName(); // Set employee name in the first column
-            alotedTime[i][0][0]= employee.getEmployeeName();
+            int []currEmployee=freeTime[i];
+            Employee employee = employees[currEmployee[0]];
+            finalAlotedTime[0]=days;
+            finalAlotedTime[i+1][0] = employee.getEmployeeName(); // Set employee name in the first column
+
 
             int[][] availableMorning = employee.getAvailableTimeMorning();
             int[][] availableEvening = employee.getAvailableTimeEvening();
@@ -28,35 +25,74 @@ public class Calculation {
             int totalAssignedHours = 0; // Track total hours assigned to the employee
 
             for(int j = 0; j < businessHours.length; j++) {
-
                 for(int k = 0; k < businessHours[j].length; k++) {
-                    if (numberOfEmployeesInAnHour[j][k] >= 1&& availableMorning[j][k] == 1) {
-
+                    if(assignedHours !=0 && totalAssignedHours < 8) {
+                        if (numberOfEmployeesInAnHour[j][k] >= 1 && availableMorning[j][k] == 1) {
+                            alotedTime[i][j][k]=1;
+                            totalAssignedHours++;
+                            assignedHours--;
+                            numberOfEmployeesInAnHour[j][k]--;
+                        } else if (numberOfEmployeesInAnHour[j][k] >= 1 && availableEvening[j][k] == 1 && totalAssignedHours == 0) {
+                            alotedTime[i][j+1][k+1]=1;
+                            totalAssignedHours++;
+                            assignedHours--;
+                            numberOfEmployeesInAnHour[j][k]--;
+                        }
                     }
-                    else if (numberOfEmployeesInAnHour[j][k] == 1 && availableEvening[j][k] == 1) {
-
-                    }
+                    finalAlotedTime[i+1][j+1]= Converter(alotedTime[i][j]);
                 }
             }
-
-
         }
-
         return finalAlotedTime;
     }
 
-    public static int[][] sortedFreeTime(Employee[] employees) {
+    public static int[][] sortedFreeTime(Employee[] employees,Business business) {
+
+        int[][] businessHours = business.getHoursOfOperation();
         int [][]freeTime= new int[employees.length][2];
-        int j=-1;
+        int employeeNumber=-1;
         for(int i = 0; i < employees.length; i++) {
+            int posibleHours=0;
             Employee employee = employees[i];
-            freeTime[i][0]=j++;
-            for(int index = 0; index < employee.getAvailableTimeMorning().length; index++ ) {
-
+            freeTime[i][0]=employeeNumber++;
+            for(int k = 0; k < employee.getAvailableTimeMorning().length; k++ ) {
+                for(int l = 0; l < employee.getAvailableTimeMorning()[k].length; l++) {
+                    if (employee.getAvailableTimeMorning()[k][l] == 1&& businessHours[k][l]==1) {
+                        posibleHours++;
+                    }
+                    if(employee.getAvailableTimeEvening()[k][l]==1&& businessHours[k][l]==1) {
+                        posibleHours++;
+                    }
+                }
             }
-            freeTime[i][1]=0;
+            freeTime[i][1]=posibleHours;
         }
-
+        freeTime=freeTimeSorter(freeTime);
+        return freeTime;
+    }
+    public static int[][] freeTimeSorter(int [][]freeTime) {
+        //liner sort
+        int []temp;
+        for(int i = 0; i < freeTime.length; i++) {
+            for (int j = i; j < freeTime.length; j++) {
+                if (freeTime[i][1] > freeTime[j][1]) {
+                    temp = freeTime[i];
+                    freeTime[i] = freeTime[j];
+                    freeTime[j] = temp;
+                }
+            }
+        }
+        for(int i = 0; i < freeTime.length; i++) {
+            for (int j = i; j < freeTime.length; j++) {
+                if (freeTime[i][1] == freeTime[j][1]) {
+                    if(freeTime[i][0] > freeTime[j][0]) {
+                        temp = freeTime[i];
+                        freeTime[i] = freeTime[j];
+                        freeTime[j] = temp;
+                    }
+                }
+            }
+        }
         return freeTime;
     }
 
@@ -75,3 +111,4 @@ public class Calculation {
         }
     }
 }
+//complete
