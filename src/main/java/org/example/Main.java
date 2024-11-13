@@ -11,11 +11,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main {
-    //employe managemnet app
+    //employee management app
 
-    // further posible impovements adding front end
+    // further possible improvements adding front end
 
-    //adding sql support so that data of employyes are not needed to be entered every time
+    //adding sql support so that data of employees are not needed to be entered every time
 
     //few assumptions are made in the code
     //1. the business operates at a continues time i.e. once it starts it stops only when it ends with no break in between
