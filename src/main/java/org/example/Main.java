@@ -123,7 +123,7 @@ public class Main {
         String [][] CSV= Calculation.alotTime(employees,Final);
         //createing a CSV file to convert array to csv.
         System.out.println(Arrays.deepToString(CSV));
-        //CSV_Creator(CSV);
+        CSV_Creator(CSV);
     }
     public static String[] noLast(String perDayEmployee, String[] perHourString, int j, Scanner sc) {
             //checks and alots the last entered time to the input and if no last time then it accepts input unless right is entered
